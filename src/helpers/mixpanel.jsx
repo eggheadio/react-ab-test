@@ -7,9 +7,7 @@ export default {
   enable(){
     if(canUseDOM) {
       if(typeof mixpanel === "undefined") {
-        const error = new Error("React A/B Test Mixpanel Helper: 'mixpanel' global is not defined.");
-        error.type = "PUSHTELL_HELPER_MISSING_GLOBAL";
-        throw error;
+        return
       }
       playSubscription = emitter.addPlayListener(function(experimentName, variantName){
         mixpanel.track("Experiment Play", {
@@ -32,9 +30,7 @@ export default {
   disable(){
     if(canUseDOM) {
       if(!playSubscription || !winSubscription) {
-        const error = new Error("React A/B Test Mixpanel Helper: Helper was not enabled.");
-        error.type = "PUSHTELL_HELPER_INVALID_DISABLE";
-        throw error;
+        return
       }
       playSubscription.remove();
       winSubscription.remove();
